@@ -1,4 +1,3 @@
-// useQuiz.js
 import { useSelector, useDispatch } from 'react-redux';
 import { nextQuestion, incrementScore } from '../components/Action';
 
