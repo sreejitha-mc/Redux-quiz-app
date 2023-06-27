@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { quizReducer } from './reducers';
+import quizReducer from './reducers';
 
 const store = createStore(quizReducer);
 

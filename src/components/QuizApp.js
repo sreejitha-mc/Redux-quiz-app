@@ -1,15 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import useQuiz from '../Hooks/useQuiz';
 import '../style.css';
 
-const QuizApp = () => {
-  const {
+const QuizApp = ({ currentQuestionIndex, score, questions, dispatch }) => {
+  const { handleAnswer, getCurrentQuestion, isQuizCompleted } = useQuiz(
     currentQuestionIndex,
     score,
-    handleAnswer,
-    getCurrentQuestion,
-    isQuizCompleted,
-  } = useQuiz();
+    questions,
+    dispatch
+  );
 
   const currentQuestion = getCurrentQuestion();
 
@@ -25,9 +25,9 @@ const QuizApp = () => {
   return (
     <div>
       <h2 className="question">Question {currentQuestionIndex + 1}</h2>
-      <p>{currentQuestion?.question}</p>
+      <p>{currentQuestion.question}</p>
       <ul className="options">
-        {currentQuestion?.options.map((option, index) => (
+        {currentQuestion.options.map((option, index) => (
           <li key={index}>
             <button onClick={() => handleAnswer(option)}>{option}</button>
           </li>
@@ -37,4 +37,12 @@ const QuizApp = () => {
   );
 };
 
-export default QuizApp;
+const mapStateToProps = (state) => {
+  return {
+    currentQuestionIndex: state.currentQuestionIndex,
+    score: state.score,
+    questions: state.questions,
+  };
+};
+
+export default connect(mapStateToProps)(QuizApp);

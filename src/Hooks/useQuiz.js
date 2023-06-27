@@ -1,16 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { nextQuestion, incrementScore } from '../components/Action';
 
-const useQuiz = () => {
+const useQuiz = (currentQuestionIndex, score, questions) => {
   const dispatch = useDispatch();
-  const currentQuestionIndex = useSelector((state) => state.currentQuestionIndex);
-  const score = useSelector((state) => state.score);
-  const questions = useSelector((state) => state.questions);
 
   const handleAnswer = (selectedAnswer) => {
     const currentQuestion = questions[currentQuestionIndex];
-
-    if (selectedAnswer === currentQuestion.correctAnswer) {
+    if (selectedAnswer === currentQuestion.answer) {
       dispatch(incrementScore());
     }
 
@@ -28,8 +24,6 @@ const useQuiz = () => {
   const isQuizCompleted = () => currentQuestionIndex >= questions.length;
 
   return {
-    currentQuestionIndex,
-    score,
     handleAnswer,
     getCurrentQuestion,
     isQuizCompleted,
